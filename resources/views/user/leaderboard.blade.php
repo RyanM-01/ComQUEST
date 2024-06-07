@@ -17,25 +17,25 @@
           <img src="{{ asset('images/logo.jpeg') }}" alt="" />
         </div>
 
-        <span class="logo_name">ComQuiz</span>
+        <span class="logo_name">ComQuest</span>
       </div>
 
       <div class="menu-items">
         <ul class="nav-links">
           <li>
-            <a href="/dashboard">
+            <a href="/user/dashboard">
               <i class="uil uil-home"></i>
               <span class="link-name">Dashboard</span>
             </a>
           </li>
           <li>
-            <a href="papanskor.html">
+            <a href="/user/leaderboard">
               <i class="uil uil-star"></i>
               <span class="link-name">Leaderboards</span>
             </a>
           </li>
           <li>
-            <a href="toko.html">
+            <a href="/user/toko">
               <i class="uil uil-shop"></i>
               <span class="link-name">Shop</span>
             </a>
@@ -73,8 +73,11 @@
     <section class="dashboard">
       <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
-
-        <img src="image1.jpeg" alt="" />
+        @if($user->avatar)
+            <img src="{{ asset('userpfp/' . $user->avatar) }}" alt="Profile Picture" />
+        @else
+            <img src="{{ asset('images/default.jpeg') }}" alt="Default Profile Picture" />            
+        @endif
       </div>
 
       <div class="dash-content">
@@ -86,47 +89,25 @@
 
           <div class="container">
             <!-- RECIPES CONTAINER -->
-            <div class="rankbox">
-              <div class="rankprofile">
-                <div class="nomorurut">1.</div>
-                <div class="logo-image">
-                  <img src="image1.jpeg" alt="" />
-                </div>
-                <div class="playername">Player 1</div>
-              </div>
+            @foreach($users as $index => $user)
+              <div class="rankbox">
+                  <div class="rankprofile">
+                      <div class="nomorurut">{{ $index + 1 }}.</div>
+                      <div class="logo-image">
+                        @if($user->avatar)
+                          <img src="{{ asset('userpfp/' . $user->avatar) }}" alt="Profile Picture" />
+                        @else
+                          <img src="{{ asset('images/default.jpeg') }}" alt="Default Profile Picture" />
+                        @endif
+                      </div>
+                      <div class="playername">{{ $user->username }}</div>
+                  </div>
 
-              <div class="rankscore">
-                <div class="score">15000</div>
+                  <div class="rankscore">
+                      <div class="score">{{ $user->score }}</div>
+                  </div>
               </div>
-            </div>
-
-            <div class="rankbox">
-              <div class="rankprofile">
-                <div class="nomorurut">2.</div>
-                <div class="logo-image">
-                  <img src="image1.jpeg" alt="" />
-                </div>
-                <div class="playername">Player 2</div>
-              </div>
-
-              <div class="rankscore">
-                <div class="score">800</div>
-              </div>
-            </div>
-
-            <div class="rankbox">
-              <div class="rankprofile">
-                <div class="nomorurut">3.</div>
-                <div class="logo-image">
-                  <img src="image1.jpeg" alt="" />
-                </div>
-                <div class="playername">Player 3</div>
-              </div>
-
-              <div class="rankscore">
-                <div class="score">750</div>
-              </div>
-            </div>
+            @endforeach
           </div>
         </div>
       </div>

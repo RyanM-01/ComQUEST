@@ -21,25 +21,25 @@
       <div class="menu-items">
         <ul class="nav-links">
           <li>
-            <a href="/dashboard">
+            <a href="/admin/dashboard">
               <i class="uil uil-home"></i>
               <span class="link-name">Dashboard</span>
             </a>
           </li>
           <li>
-          <a href="#">
+          <a href="/admin/leaderboard">
               <i class="uil uil-star"></i>
               <span class="link-name">Leaderboards</span>
             </a>
           </li>
           <li>
-            <a href="toko.html">
+            <a href="/admin/toko">
               <i class="uil uil-shop"></i>
               <span class="link-name">Shop</span>
             </a>
           </li>
           <li>
-            <a href="kostumisasi.html">
+            <a href="/admin/customize">
               <i class="uil uil-brush-alt"></i>
               <span class="link-name">Costumize</span>
             </a>
@@ -90,7 +90,7 @@
                         @method('PUT')
                         <p>
                             <label for="avatar" class="text">Profile Picture </label><br />
-                            <input class="form-control" type="file" name="url_foto" id="url_foto" autocomplete="off" />
+                            <input class="form-control" type="file" name="foto" id="foto" autocomplete="off" />
                         </p>
                         <p>
                             <label for="name" class="text">Nama </label><br />

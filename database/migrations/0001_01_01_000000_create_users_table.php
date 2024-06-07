@@ -23,10 +23,11 @@ return new class extends Migration
             $table->integer('score')->default(0);
             $table->integer('balance')->default(0);
             $table->integer('dailystrike')->default(0);
+            $table->string('avatar')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
-        DB::statement("ALTER TABLE users ADD avatar LONGBLOB NULL");
+        
 
 
 

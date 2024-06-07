@@ -17,27 +17,33 @@
           <img src="{{ asset('images/logo.jpeg') }}" alt="" />
       </div>
 
-        <span class="logo_name">ComQuiz</span>
+        <span class="logo_name">ComQuest</span>
       </div>
 
       <div class="menu-items">
         <ul class="nav-links">
           <li>
-            <a href="/dashboard">
+            <a href="/admin/dashboard">
               <i class="uil uil-home"></i>
               <span class="link-name">Dashboard</span>
             </a>
           </li>
           <li>
-            <a href="adminpapanskor.html">
+            <a href="/admin/leaderboard">
               <i class="uil uil-star"></i>
               <span class="link-name">Leaderboards</span>
             </a>
           </li>
           <li>
-            <a href="admintoko.html">
+            <a href="/admin/toko">
               <i class="uil uil-shop"></i>
               <span class="link-name">Shop</span>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/customize">
+              <i class="uil uil-brush-alt"></i>
+              <span class="link-name">Costumize</span>
             </a>
           </li>
           <li>
@@ -65,12 +71,13 @@
     <section class="dashboard">
         <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
-        <div class="search-box">
+        <form action="{{ route('admin.matkul.search') }}" method="GET" class="search-box">
           <i class="uil uil-search"></i>
-          <input type="text" placeholder="Cari matkul..." />
-        </div>
+          <input type="text" name="query" placeholder="Cari matkul..." />
+          <button type="submit">Cari</button>
+        </form>
         @if($user->avatar)
-        <img src="{{ asset('storage/images/' . $user->avatar) }}" alt="Profile Picture" />
+        <img src="{{ asset('userpfp/' . $user->avatar) }}" alt="Profile Picture" />
         @else
           <!-- Tampilkan gambar default jika user tidak memiliki foto profil -->
           <img src="{{ asset('images/default.jpeg') }}"/>
@@ -100,8 +107,8 @@
 
           <div class="matkulcontainer">
             @foreach ($matkuls as $matkul)
-              <div class="matkul S3">
-                <a href="{{ route('admin.bab.create', $matkul->id) }}">
+            <a href="{{ route('admin.bab.create', $matkul->id) }}">
+              <div class="matkul S{{$matkul->semester}}">
                   <div class="matkulpic">
                     @if($matkul->picture)
                     <img src="{{ asset('storage/images/' . $matkul->picture) }}" alt="Matkul Picture" />
@@ -132,5 +139,19 @@
 
     <script src="{{ asset('js/filter.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
+    <script>
+      // Memeriksa tema yang dipilih dari localStorage
+      function getTheme() {
+        return localStorage.getItem("theme");
+      }
+
+      // Menerapkan tema yang dipilih
+      document.addEventListener("DOMContentLoaded", () => {
+        const savedTheme = getTheme();
+        if (savedTheme) {
+          document.body.classList.add(savedTheme);
+        }
+      });
+    </script>
   </body>
 </html>

@@ -3,6 +3,9 @@ const badan = document.querySelector("body"),
   changeThemeBlack = badan.querySelector(".circleblack"),
   changeThemePurple = badan.querySelector(".circlepurple"),
   changeThemeGreen = badan.querySelector(".circlegreen"),
+  changeThemeRoastedPeach = badan.querySelector(".circleroastedpeach"),
+  changeThemeSwimmingPool = badan.querySelector(".circleswimmingpool"),
+  changeThemeCottonCandy = badan.querySelector(".circlecottoncandy"),
   dashContent = document.querySelector(".dash-content");
 
 changeThemeBlue.addEventListener("click", () => {
@@ -31,6 +34,27 @@ changeThemeGreen.addEventListener("click", () => {
   badan.classList.toggle("green");
   badan.classList.remove("purple", "blue", "black", "roastedpeach", "swimmingpool", "cottoncandy");
   saveTheme("green");
+});
+
+changeThemeRoastedPeach.addEventListener("click", () => {
+  console.log("Clicked roastedpeach");
+  badan.classList.toggle("roastedpeach");
+  badan.classList.remove("purple", "blue", "black", "green", "swimmingpool", "cottoncandy");
+  saveTheme("roastedpeach");
+});
+
+changeThemeSwimmingPool.addEventListener("click", () => {
+  console.log("Clicked swimmingpool");
+  badan.classList.toggle("swimmingpool");
+  badan.classList.remove("purple", "blue", "black", "green", "roastedpeach", "cottoncandy");
+  saveTheme("swimmingpool");
+});
+
+changeThemeCottonCandy.addEventListener("click", () => {
+  console.log("Clicked cottoncandy");
+  badan.classList.toggle("cottoncandy");
+  badan.classList.remove("purple", "blue", "black", "green", "swimmingpool", "roastedpeach");
+  saveTheme("cottoncandy");
 });
 
 function saveTheme(theme) {

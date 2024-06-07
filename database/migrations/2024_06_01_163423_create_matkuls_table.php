@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('code')->unique();
-            $table->string('semester');
+            $table->integer('semester');
+            $table->string('photo')->nullable();
             $table->timestamps();
         });
-        DB::statement("ALTER TABLE matkuls ADD picture LONGBLOB NULL");
         
     }
 

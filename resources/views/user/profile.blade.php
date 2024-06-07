@@ -15,13 +15,13 @@
           <img src="{{ asset('images/logo.jpeg') }}" alt="" />
         </div>
 
-        <span class="logo_name">ComQuiz</span>
+        <span class="logo_name">ComQuest</span>
       </div>
 
       <div class="menu-items">
         <ul class="nav-links">
           <li>
-            <a href="/dashboard">
+            <a href="/user/dashboard">
               <i class="uil uil-home"></i>
               <span class="link-name">Dashboard</span>
             </a>
@@ -33,7 +33,7 @@
             </a>
           </li>
           <li>
-            <a href="toko.html">
+            <a href="/user/toko">
               <i class="uil uil-shop"></i>
               <span class="link-name">Shop</span>
             </a>
@@ -71,7 +71,11 @@
     <div class="top">
         <i class="uil uil-bars sidebar-toggle"></i>
         @if($user->avatar)
-          <img src="{{ asset('storage/images/' . $user->avatar) }}" alt="Profile Picture" />
+          @if($user->avatar)
+            <img src="{{ asset('userpfp/' . $user->avatar) }}" alt="Profile Picture" />
+          @else
+            <img src="{{ asset('images/default.jpeg') }}" alt="Default Profile Picture" />
+          @endif
         @else
           <!-- Tampilkan gambar default jika user tidak memiliki foto profil -->
           <img src="{{ asset('images/default.jpeg') }}"/>
@@ -89,12 +93,12 @@
               <div class="boxes">
                 <div class="box box1">
                   <i class="uil uil-fire"></i>
-                  <span class="text">Day streak</span>
-                  <span class="number">{{$user->dailystrike}}</span>
+                  <span class="text">Score This Week</span>
+                  <span class="number">{{$user->score}}</span>
                 </div>
                 <div class="box box2">
                   <i class="uil uil-bolt"></i>
-                  <span class="text">Total Coin</span>
+                  <span class="text">Total Credit</span>
                   <span class="number">{{$user->balance}}</span>
                 </div>
               </div>
@@ -109,7 +113,7 @@
                         @method('PUT')
                         <p>
                             <label for="avatar" class="text">Profile Picture </label><br />
-                            <input class="form-control" type="file" name="url_foto" id="url_foto" autocomplete="off" />
+                            <input class="form-control" type="file" name="avatar" id="avatar" autocomplete="off" />
                         </p>
                         <p>
                             <label for="name" class="text">Nama </label><br />
@@ -131,8 +135,9 @@
                         <p>
                             <label for="password" class="text">Password </label><br />
                             <input class="form-control" type="password" name="password" id="password" autocomplete="off" />
-                            <small>Leave blank if you don't want to change the password</small>
+                            <small>Biarkan kosong jika tidak ingin mengubah password</small>
                         </p>
+
                         <p>
                             <div class="button-container">
                                 <button class="button1" type="submit">Update</button>

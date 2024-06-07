@@ -16,31 +16,37 @@
         <div class="logo-image">
           <img src="logo.jpeg" alt="Logo" />
         </div>
-        <span class="logo_name">ComQuiz</span>
+        <span class="logo_name">ComQuest</span>
       </div>
 
       <div class="menu-items">
         <ul class="nav-links">
           <li>
-            <a href="/dashboard">
+            <a href="/admin/dashboard">
               <i class="uil uil-home"></i>
               <span class="link-name">Dashboard</span>
             </a>
           </li>
           <li>
-            <a href="adminpapanskor.html">
+            <a href="/admin/leaderboard">
               <i class="uil uil-star"></i>
               <span class="link-name">Leaderboards</span>
             </a>
           </li>
           <li>
-            <a href="admintoko.html">
+            <a href="/admin/toko">
               <i class="uil uil-shop"></i>
               <span class="link-name">Shop</span>
             </a>
           </li>
           <li>
-            <a href="adminprofile.html">
+            <a href="/admin/customize">
+              <i class="uil uil-brush-alt"></i>
+              <span class="link-name">Costumize</span>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/profile">
               <i class="uil uil-user-circle"></i>
               <span class="link-name">Profile</span>
             </a>
@@ -120,5 +126,19 @@
     </section>
 
     <script src="{{ asset('js/script.js') }}"></script>
+    <script>
+      // Memeriksa tema yang dipilih dari localStorage
+      function getTheme() {
+        return localStorage.getItem("theme");
+      }
+
+      // Menerapkan tema yang dipilih
+      document.addEventListener("DOMContentLoaded", () => {
+        const savedTheme = getTheme();
+        if (savedTheme) {
+          document.body.classList.add(savedTheme);
+        }
+      });
+    </script>
   </body>
 </html>

@@ -9,7 +9,7 @@ class Matkul extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'code', 'semester', 'picture'];
+    protected $fillable = ['name', 'code', 'semester', 'photo'];
 
     public function babs()
     {

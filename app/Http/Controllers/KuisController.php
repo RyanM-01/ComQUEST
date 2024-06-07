@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Bab;
 use App\Models\Quiz;
+use App\Models\Question;
 
 class KuisController extends Controller
 {
@@ -20,7 +21,13 @@ class KuisController extends Controller
         ]);
 
         $bab->quizzes()->create($request->all());
-        return redirect()->route('admin.quiz.create', $bab->matkul_id)->with('success', 'Quiz created successfully.');
+        return back()->with('success', 'Quiz created successfully.');
+    }
+
+    public function addSoal(Bab $bab, Quiz $quiz)
+    {
+        $matkul = $bab->matkul;
+        return view('admin.soalform', compact('bab', 'matkul', 'quiz'));
     }
 
     public function update(Request $request, Bab $bab, Quiz $quiz)
@@ -36,6 +43,6 @@ class KuisController extends Controller
     public function destroy(Bab $bab, Quiz $quiz)
     {
         $quiz->delete();
-        return redirect()->route('admin.quiz.create', $bab->matkul_id)->with('success', 'Quiz deleted successfully.');
+        return back()->with('success', 'Quiz deleted successfully.');
     }
 }

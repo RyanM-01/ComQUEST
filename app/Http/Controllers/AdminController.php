@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Matkul;
+use App\Models\User;
+use App\Models\Item;
 
 class AdminController extends Controller
 {
@@ -20,6 +21,12 @@ class AdminController extends Controller
     public function profile(){
         $user = Auth::user();
         return view('admin.profile',['user' => $user]);
+    }
+
+    public function toko(){
+        $user = Auth::user();
+        $items = Item::all();
+        return view('admin.toko',['user' => $user, 'items' => $items]);
     }
 
 
@@ -49,27 +56,32 @@ class AdminController extends Controller
             $user->password = bcrypt($request->input('password'));
         }
 
-        // Update foto jika ada
-        if ($request->hasFile('url_foto')) {
-            // Hapus foto lama jika ada
-            if ($user->avatar) {
-                Storage::delete('public/images/' . $user->avatar);
-            }
-
-            // Simpan foto baru ke storage
-            $path = $request->file('url_foto')->store('images', 'public');
-
-            // Ambil nama file dari path baru untuk disimpan di database
-            $fileName = basename($path);
-            $user->avatar = $fileName;
-
+        // Update avatar if provided
+    if ($request->hasFile('foto')) {
+        // Delete old avatar if exists
+        if ($user->avatar) {
+            Storage::delete($user->avatar);
         }
+
+        // Store new avatar and update user's avatar path
+        $imageName = time().$request->file('foto')->extension(); // Menggunakan metode extension() pada UploadedFile
+        $request->file('foto')->move(public_path('userpfp'), $imageName);
+        $user->avatar = $imageName;
+    }
 
         // Simpan perubahan
         $user->save();
         return view('admin.profile',['user' => $user]);
     }
 
-
+    public function resetscoreall()
+    {
+        $users = User::all();
+        foreach ($users as $user) {
+            $user->score = 0;
+            $user->save();
+        }
+        return back()->with('success', 'Score reset successfully.');
+    }
 
 }

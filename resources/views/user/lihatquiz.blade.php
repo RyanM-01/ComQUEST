@@ -16,13 +16,13 @@
           <img src="{{ asset('images/logo.jpeg') }}" alt="" />
         </div>
 
-        <span class="logo_name">ComQuiz</span>
+        <span class="logo_name">ComQuest</span>
       </div>
 
       <div class="menu-items">
         <ul class="nav-links">
           <li>
-            <a href="/dashboard">
+            <a href="/user/dashboard">
               <i class="uil uil-home"></i>
               <span class="link-name">Dashboard</span>
             </a>
@@ -34,7 +34,7 @@
             </a>
           </li>
           <li>
-            <a href="toko.html">
+            <a href="/user/toko">
               <i class="uil uil-shop"></i>
               <span class="link-name">Shop</span>
             </a>
@@ -76,42 +76,45 @@
           <input type="text" placeholder="Cari kuis..." />
         </div>
         @if($user->avatar)
-        <img src="{{ asset('storage/images/' . $user->avatar) }}" alt="Profile Picture" />
+            <img src="{{ asset('userpfp/' . $user->avatar) }}" alt="Profile Picture" />
         @else
-          <!-- Tampilkan gambar default jika user tidak memiliki foto profil -->
-          <img src="{{ asset('images/default.jpeg') }}"/>
+            <img src="{{ asset('images/default.jpeg') }}" alt="Default Profile Picture" />            
         @endif
       </div>
         <div class="dash-content">
+            <div class="title">
+              <span class="text">{{ $matkul->code }} | {{ $matkul->name }}</span>
+            </div>
             <div class="overview">
                 <div class="title">
                     <i class="uil uil-paperclip"></i>
                     <span class="text">{{ $bab->name }}</span>
                 </div>
                 <div class="container">
-                    @foreach ($quizzes as $quiz)
-                        <div class="babbox">
-                            <div class="quiz">
-                                <p class="quiz-name">{{ $quiz->name }}</p>
-                            </div>
-                            <div>
-                                <a href="#" class="takequiz-btn">Kerjakan Quiz</a>
-                            </div>
+                @foreach ($quizzes as $quiz)
+                    <div class="babbox">
+                        <div class="quiz">
+                            <p class="quiz-name">{{ $quiz->name }}</p>
                         </div>
-                    @endforeach
-                </div>
-                <div class="popup-info">
-                  <h2>Quiz Guide</h2>
-                  <span class="info"> 1. Kuis ini terdiri dari beberapa pertanyaan pilihan ganda</span>
-                  <span class="info"> 2. Setiap jawaban yang benar akan memberi Anda 10 coin</span>
-                  <span class="info"> 3. Gunakan tombol "Next" untuk beralih ke pertanyaan berikutnya</span>
-                  <span class="info"> 4. Setelah menjawab semua pertanyaan, klik tombol "Submit" untuk mengirim jawaban Anda</span>
+                        <div>
+                            <a href="#" class="takequiz-btn" data-quiz-id="{{ $quiz->id }}">Kerjakan Quiz</a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <div class="popup-info">
+                <h2>Quiz Guide</h2>
+                <span class="info"> 1. Kuis ini terdiri dari beberapa pertanyaan pilihan ganda</span>
+                <span class="info"> 2. Setiap jawaban yang benar akan memberi Anda 10 coin</span>
+                <span class="info"> 3. Gunakan tombol "Next" untuk beralih ke pertanyaan berikutnya</span>
+                <span class="info"> 4. Setelah menjawab semua pertanyaan, klik tombol "Submit" untuk mengirim jawaban Anda</span>
 
-                  <div class="btn-group">
+                <div class="btn-group">
                     <button class="info-btn exit-btn">Back</button>
-                    <a href="quizpage.html" class="info-btn continue-btn">Continue</a>
-                  </div>
+                    <a href="#" class="info-btn continue-btn" id="continue-btn">Continue</a>
                 </div>
+            </div>
+
     </section>
     <script src="{{ asset('js/script.js') }}"></script>
     <script>
@@ -120,13 +123,34 @@
         return localStorage.getItem("theme");
       }
 
-      // Menerapkan tema yang dipilih
-      document.addEventListener("DOMContentLoaded", () => {
-        const savedTheme = getTheme();
-        if (savedTheme) {
-          document.body.classList.add(savedTheme);
-        }
-      });
+
+      document.addEventListener('DOMContentLoaded', function() {
+          const takeQuizButtons = document.querySelectorAll('.takequiz-btn');
+          const continueButton = document.querySelector('.continue-btn');
+          const savedTheme = getTheme();
+          if (savedTheme) {
+            document.body.classList.add(savedTheme);
+          }
+
+          const baseUrl = "{{ route('user.quizzes.attempt', ['matkul' => $matkul->id, 'bab' => $bab->id, 'quiz' => ':quizId']) }}";
+
+          takeQuizButtons.forEach(button => {
+              button.addEventListener('click', function(event) {
+                  event.preventDefault();
+
+                  // Get the quiz ID from the data attribute
+                  const quizId = this.getAttribute('data-quiz-id');
+
+                  // Replace the placeholder with the actual quiz ID
+                  const quizUrl = baseUrl.replace(':quizId', quizId);
+                  console.log('Generated URL:', quizUrl);
+
+                  // Update the href attribute of the continue button with the quiz URL
+                  continueButton.setAttribute('href', quizUrl);
+              });
+            });
+          });
+
     </script>
 </body>
 </html>

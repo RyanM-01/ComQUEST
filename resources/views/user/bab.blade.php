@@ -17,13 +17,13 @@
           <img src="{{ asset('images/logo.jpeg') }}" alt="" />
         </div>
 
-        <span class="logo_name">ComQuiz</span>
+        <span class="logo_name">ComQuest</span>
       </div>
 
       <div class="menu-items">
         <ul class="nav-links">
           <li>
-            <a href="/dashboard">
+            <a href="/user/dashboard">
               <i class="uil uil-home"></i>
               <span class="link-name">Dashboard</span>
             </a>
@@ -35,7 +35,7 @@
             </a>
           </li>
           <li>
-            <a href="toko.html">
+            <a href="/user/toko">
               <i class="uil uil-shop"></i>
               <span class="link-name">Shop</span>
             </a>
@@ -77,17 +77,16 @@
           <input type="text" placeholder="Cari bab..." />
         </div>
         @if($user->avatar)
-        <img src="{{ asset('storage/images/' . $user->avatar) }}" alt="Profile Picture" />
+            <img src="{{ asset('userpfp/' . $user->avatar) }}" alt="Profile Picture" />
         @else
-          <!-- Tampilkan gambar default jika user tidak memiliki foto profil -->
-          <img src="{{ asset('images/default.jpeg') }}"/>
+            <img src="{{ asset('images/default.jpeg') }}" alt="Default Profile Picture" />            
         @endif
       </div>
         <div class="dash-content">
             <div class="overview">
                 <div class="title">
                     <i class="uil uil-paperclip"></i>
-                    <span class="text">{{ $matkul->name }}</span>
+                    <span class="text">{{ $matkul->code }} | {{ $matkul->name }}</span>
                 </div>
                 <div class="container">
                     @foreach ($babs as $bab)
@@ -96,7 +95,7 @@
                                 <p class="bab-name">{{ $bab->name }}</p>
                             </div>
                             <div>
-                                <a href="{{ route('user.quizzes.index', $bab->id) }}" class="takequiz-btn">List Quiz</a>
+                                <a href="{{ route('user.quizzes.index', ['matkul' => $matkul->id, 'bab' => $bab->id]) }}" class="takequiz-btn">List Quiz</a>
                             </div>
                         </div>
                     @endforeach

@@ -25,7 +25,7 @@
                 @csrf
                 <p>
                     <label for="url_foto" class="text">Quiz Picture (optional)</label><br />
-                    <input class="form-control" type="file" name="url_foto" id="url_foto" autocomplete="off" />
+                    <input class="form-control" type="file" name="foto" id="foto" autocomplete="off" />
                 </p>
                 <p>
                     <label for="name" class="text">Matkul name</label><br />
@@ -37,7 +37,7 @@
                 </p>
                 <p>
                     <label for="semester" class="text">Semester</label><br />
-                    <input class="form-control" type="text" name="semester" id="semester" required autocomplete="off" placeholder="Enter in the format 'S number', e.g., 'S4'" />
+                    <input class="form-control" type="text" name="semester" id="semester" required autocomplete="off" placeholder="Enter in the format 'S number', e.g., '4'" />
                 </p>
                 <div class="button-container">
                     <button class="btn" type="submit" name="create">CREATE</button>

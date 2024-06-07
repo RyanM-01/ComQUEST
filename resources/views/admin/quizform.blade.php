@@ -13,7 +13,7 @@
   <nav>
       <div class="logo-name">
         <div class="logo-image">
-          <img src="logo.jpeg" alt="Logo" />
+          <img src="{{asset('images/logo.jpeg')}}" alt="Logo" />
         </div>
         <span class="logo_name">ComQuiz</span>
       </div>
@@ -21,25 +21,31 @@
       <div class="menu-items">
         <ul class="nav-links">
           <li>
-            <a href="/dashboard">
+            <a href="/admin/dashboard">
               <i class="uil uil-home"></i>
               <span class="link-name">Dashboard</span>
             </a>
           </li>
           <li>
-            <a href="adminpapanskor.html">
+            <a href="/admin/leaderboard">
               <i class="uil uil-star"></i>
               <span class="link-name">Leaderboards</span>
             </a>
           </li>
           <li>
-            <a href="admintoko.html">
+            <a href="/admin/toko">
               <i class="uil uil-shop"></i>
               <span class="link-name">Shop</span>
             </a>
           </li>
           <li>
-            <a href="adminprofile.html">
+            <a href="/admin/customize">
+              <i class="uil uil-brush-alt"></i>
+              <span class="link-name">Costumize</span>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/profile">
               <i class="uil uil-user-circle"></i>
               <span class="link-name">Profile</span>
             </a>
@@ -68,7 +74,11 @@
           <input type="text" placeholder="Cari bab..." />
         </div>
 
-        <img src="image1.jpeg" alt="User Profile Picture" />
+        @if($user->avatar)
+            <img src="{{ asset('userpfp/' . $user->avatar) }}" alt="Profile Picture" />
+        @else
+            <img src="{{ asset('images/default.jpeg') }}" alt="Default Profile Picture" />            
+        @endif
       </div>
         <div class="dash-content">
             <div class="overview">
@@ -87,9 +97,12 @@
                             <form action="{{ route('admin.quiz.update', [$bab->id, $quiz->id]) }}" method="POST">
                                 @csrf
                                 @method('PUT')
-                                <input class ="namabab" type="text" name="name" value="{{ $quiz->name }}" required>
                                 <button class="btn" type="submit" name="update"><i class="uil uil-edit"></i></button>
+                                <input class ="namabab" type="text" name="name" value="{{ $quiz->name }}" required>
                             </form>
+                            <div>
+                              <a href="{{ route('admin.quiz.addSoal', [$bab->id, $quiz->id]) }}" class="takequiz-btn" style ="padding:10px; margin-left:400px;" >Add Soal</a>
+                            </div>
                             <form action="{{ route('admin.quiz.destroy', [$bab->id, $quiz->id]) }}" method="POST" style="display:inline-block;">
                                 @csrf
                                 @method('DELETE')
@@ -102,5 +115,19 @@
         </div>
     </section>
     <script src="{{ asset('js/script.js') }}"></script>
+    <script>
+      // Memeriksa tema yang dipilih dari localStorage
+      function getTheme() {
+        return localStorage.getItem("theme");
+      }
+
+      // Menerapkan tema yang dipilih
+      document.addEventListener("DOMContentLoaded", () => {
+        const savedTheme = getTheme();
+        if (savedTheme) {
+          document.body.classList.add(savedTheme);
+        }
+      });
+    </script>
 </body>
 </html>
